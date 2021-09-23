@@ -1,25 +1,40 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class Clock extends React.Component {
+  constructor (props) {
+    super(props);
+    this.state = { 
+      date: new Date()
+    }; // this is the component state property object
+  }
+
+  componentDidMount () {
+    this.timer = setInterval(
+      () => this.updateTime(),
+      1000
+    );
+  }
+
+  updateTime () {
+    this.setState({
+      date: new Date()
+    });
+  }
+
+  componentWillUnmount () {
+    // run code just before component is removed from the DOM
+    clearInterval(this.timer);
+  }
+
+  render () {
+    return (
+      <div>
+        <h2 className="mx-2 my-2">
+          The time now is {this.state.date.toLocaleTimeString()}.
+        </h2>
+      </div>
+    )
+  }
 }
 
-export default App;
+export default Clock;
